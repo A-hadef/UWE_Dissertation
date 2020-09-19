@@ -1,13 +1,10 @@
 package com.uwe.dissertation.ins;
 
-import com.uwe.dissertation.ins.policybook.PolicyBook;
-import com.uwe.dissertation.ins.policybook.contact.Customer;
 import com.uwe.dissertation.ins.controller.CustomerController;
+import com.uwe.dissertation.ins.controller.options.MenuOption;
+import com.uwe.dissertation.ins.policybook.PolicyBook;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class InsuranceApp {
 
@@ -18,22 +15,44 @@ public class InsuranceApp {
     public InsuranceApp() {
         textIO = TextIoFactory.getTextIO();
         policyBook = new PolicyBook();
-        customerController = new CustomerController(textIO,policyBook);
+        customerController = new CustomerController(textIO, policyBook);
     }
 
     public static void main(String[] args) {
         new InsuranceApp().run();
-//        String firstName = textIO.newStringInputReader().read("Type First Name");
-//        textIO.getTextTerminal().print(firstName);
     }
 
     private void run() {
-
         typeLogin();
-        customerController.addNewCustomer();
-        customerController.displayCustomers();
+        MenuOption option;
+        
+        do {
+            textIO.getTextTerminal().println();
+            textIO.getTextTerminal().println("******************************************");
+            option = textIO.newEnumInputReader(MenuOption.class).read("Choose option");
+            textIO.getTextTerminal().println();
+            handleOption(option);
+        } while(option != MenuOption.EXIT);
+        
+        textIO.dispose();
     }
 
+    private void handleOption(MenuOption option) {
+        switch (option) {
+            case CREATE_NEW_CONTACT:
+                customerController.addNewCustomer();
+                break;
+            case DISPLAY_CONTACTS:
+                customerController.displayCustomers();
+                break;
+            case SELECT_CUSTOMER_BY_ID:
+                customerController.selectCustomerByID();
+                break;
+            case CREATE_NEW_POLICY_FOR_SELECTED_CUSTOMER:
+                customerController.createNewPolicyForSelectedCustomer();
+                break;
+        }
+    }
 
 
     private void typeLogin() {
