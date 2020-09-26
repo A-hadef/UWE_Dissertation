@@ -2,6 +2,7 @@ package com.uwe.dissertation.ins;
 
 import com.uwe.dissertation.ins.controller.CustomerController;
 import com.uwe.dissertation.ins.controller.options.MenuOption;
+import com.uwe.dissertation.ins.io.TextIOUtil;
 import com.uwe.dissertation.ins.policybook.PolicyBook;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
@@ -25,15 +26,15 @@ public class InsuranceApp {
     private void run() {
         typeLogin();
         MenuOption option;
-        
+
         do {
             textIO.getTextTerminal().println();
             textIO.getTextTerminal().println("******************************************");
             option = textIO.newEnumInputReader(MenuOption.class).read("Choose option");
             textIO.getTextTerminal().println();
             handleOption(option);
-        } while(option != MenuOption.EXIT);
-        
+        } while (option != MenuOption.EXIT);
+
         textIO.dispose();
     }
 
@@ -56,6 +57,9 @@ public class InsuranceApp {
 
 
     private void typeLogin() {
+        TextIOUtil.readString("Username");
+        TextIOUtil.readPassword("Password");
+        
         String user = textIO.newStringInputReader()
                 .withDefaultValue("admin")
                 .read("Username");
