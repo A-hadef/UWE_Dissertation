@@ -43,9 +43,11 @@ public class CustomerController {
     }
 
     public void displayCustomers() {
-        textIO.getTextTerminal().println("Customer Lists");
+        TextIOUtil.println("Customer Lists");
+//        textIO.getTextTerminal().println("Customer Lists");
         for (Customer customer : policyBook.getCustomers()) {
-            textIO.getTextTerminal().printf("ID:%d FirstName:%s Surname:%s\n", customer.getCustomerID(), customer.getFirst(), customer.getSurname());
+            TextIOUtil.println("ID:%d FirstName:%s Surname:%s", customer.getCustomerID(), customer.getFirst(), customer.getSurname());
+//            textIO.getTextTerminal().printf("ID:%d FirstName:%s Surname:%s\n", customer.getCustomerID(), customer.getFirst(), customer.getSurname());
         }
     }
 

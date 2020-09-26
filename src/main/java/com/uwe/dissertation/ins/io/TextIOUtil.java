@@ -62,6 +62,10 @@ public class TextIOUtil {
         textTerminal.println(prompt);
     }
 
+    public static void println(String prompt, Object... args) {
+        println(String.format(prompt, args));
+    }
+
     public static int readInt(String prompt) {
         return intInputReader.read(prompt);
     }
