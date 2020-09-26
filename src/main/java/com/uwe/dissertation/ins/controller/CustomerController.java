@@ -1,11 +1,11 @@
 package com.uwe.dissertation.ins.controller;
 
+import com.uwe.dissertation.ins.io.TextIOUtil;
 import com.uwe.dissertation.ins.policybook.PolicyBook;
 import com.uwe.dissertation.ins.policybook.contact.Customer;
 import org.beryx.textio.TextIO;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class CustomerController {
@@ -21,12 +21,18 @@ public class CustomerController {
     }
 
     private Customer createNewCustomer() {
-        String first = textIO.newStringInputReader().read("Enter Customer First Name");
-        String surname = textIO.newStringInputReader().read("Enter Customer  Surname");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Boolean drivingConviction = Boolean.valueOf(textIO.newStringInputReader().read("Have you had any driving convictions?"));
-        LocalDate dateOfBirth = LocalDate.parse(textIO.newStringInputReader().read("Enter DOB in the format 'DD/MM/YYYY'"), formatter);
-        String drivingConvictionCode = textIO.newStringInputReader().read("Enter driving conviction code");
+        String first = TextIOUtil.readString("Enter Customer First Name");
+        String surname = TextIOUtil.readString("Enter Customer Surname");
+        LocalDate dateOfBirth = TextIOUtil.readDate("Enter DOB");
+        boolean drivingConviction = TextIOUtil.readBoolean("Have you had any driving convictions?");
+        String drivingConvictionCode = TextIOUtil.readString("Enter driving conviction code");
+
+//        String first = textIO.newStringInputReader().read("Enter Customer First Name");
+//        String surname = textIO.newStringInputReader().read("Enter Customer  Surname");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//        Boolean drivingConviction = Boolean.valueOf(textIO.newStringInputReader().read("Have you had any driving convictions?"));
+//        LocalDate dateOfBirth = LocalDate.parse(textIO.newStringInputReader().read("Enter DOB in the format 'DD/MM/YYYY'"), formatter);
+//        String drivingConvictionCode = textIO.newStringInputReader().read("Enter driving conviction code");
         return new Customer(first, surname, dateOfBirth, drivingConviction, drivingConvictionCode);
     }
 

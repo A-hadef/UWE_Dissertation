@@ -54,6 +54,14 @@ public class TextIOUtil {
         return passwordReader.read(prompt);
     }
 
+    public static void println() {
+        println("");
+    }
+
+    public static void println(String prompt) {
+        textTerminal.println(prompt);
+    }
+
     public static int readInt(String prompt) {
         return intInputReader.read(prompt);
     }

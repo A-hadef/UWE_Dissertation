@@ -28,10 +28,15 @@ public class InsuranceApp {
         MenuOption option;
 
         do {
-            textIO.getTextTerminal().println();
-            textIO.getTextTerminal().println("******************************************");
-            option = textIO.newEnumInputReader(MenuOption.class).read("Choose option");
-            textIO.getTextTerminal().println();
+            TextIOUtil.println();
+            TextIOUtil.println("******************************************");
+            option = TextIOUtil.readOption(MenuOption.class, "Choose option");
+            TextIOUtil.println();
+
+//            textIO.getTextTerminal().println();
+//            textIO.getTextTerminal().println("******************************************");
+//            option = textIO.newEnumInputReader(MenuOption.class).read("Choose option");
+//            textIO.getTextTerminal().println();
             handleOption(option);
         } while (option != MenuOption.EXIT);
 
@@ -59,13 +64,13 @@ public class InsuranceApp {
     private void typeLogin() {
         TextIOUtil.readString("Username");
         TextIOUtil.readPassword("Password");
-        
-        String user = textIO.newStringInputReader()
-                .withDefaultValue("admin")
-                .read("Username");
-        String password = textIO.newStringInputReader()
-                .withMinLength(6)
-                .withInputMasking(true)
-                .read("Password");
+
+//        String user = textIO.newStringInputReader()
+//                .withDefaultValue("admin")
+//                .read("Username");
+//        String password = textIO.newStringInputReader()
+//                .withMinLength(6)
+//                .withInputMasking(true)
+//                .read("Password");
     }
 }
