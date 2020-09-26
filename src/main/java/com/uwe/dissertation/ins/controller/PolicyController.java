@@ -16,7 +16,14 @@ public class PolicyController {
     public Policy createNewPolicy() {
         Policy policy = new Policy();
         policyBook.getPolicies().add(policy);
-        
+        captureRiskData (policy);
         return policy;
+    }
+
+    private void captureRiskData(Policy policy) {
+        String registrationNumber = textIO.newStringInputReader().read("Please Enter your registration number");
+        Integer mileage = textIO.newIntInputReader().read("Please Enter the annual mileage of the vehicle");
+        policy.setRegistrationNumber(registrationNumber);
+        policy.setMileage(mileage);
     }
 }

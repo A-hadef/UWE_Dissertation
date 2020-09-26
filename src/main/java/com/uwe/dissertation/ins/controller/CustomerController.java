@@ -4,6 +4,8 @@ import com.uwe.dissertation.ins.policybook.PolicyBook;
 import com.uwe.dissertation.ins.policybook.contact.Customer;
 import org.beryx.textio.TextIO;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 public class CustomerController {
@@ -21,7 +23,11 @@ public class CustomerController {
     private Customer createNewCustomer() {
         String first = textIO.newStringInputReader().read("Enter Customer First Name");
         String surname = textIO.newStringInputReader().read("Enter Customer  Surname");
-        return new Customer(first, surname);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        Boolean drivingConviction = Boolean.valueOf(textIO.newStringInputReader().read("Have you had any driving convictions?"));
+        LocalDate dateOfBirth = LocalDate.parse(textIO.newStringInputReader().read("Enter DOB in the format 'DD/MM/YYYY'"), formatter);
+        String drivingConvictionCode = textIO.newStringInputReader().read("Enter driving conviction code");
+        return new Customer(first, surname, dateOfBirth, drivingConviction, drivingConvictionCode);
     }
 
     public void addNewCustomer() {
