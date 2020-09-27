@@ -10,6 +10,9 @@ import org.beryx.textio.TextTerminal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TextIOUtil {
 
@@ -81,5 +84,9 @@ public class TextIOUtil {
         passwordReader = textIO.newStringInputReader().withMinLength(6).withInputMasking(true);
         intInputReader = textIO.newIntInputReader();
         booleanInputReader = textIO.newBooleanInputReader().withDefaultValue(false);
+    }
+
+    public static List<String> readList(String prompt) {
+        return Arrays.asList(readString(prompt + " separated by commas").split(","));
     }
 }

@@ -14,9 +14,9 @@ public class Customer {
     private final List<Policy> policies;
     private final LocalDate dateOfBirth;
     private final Boolean drivingConviction;
-    private final String drivingConvictionCode;
+    private final List<String> drivingConvictionCode;
 
-    public Customer(String first, String surname, LocalDate dateOfBirth, Boolean drivingConviction, String drivingConvictionCode) {
+    public Customer(String first, String surname, LocalDate dateOfBirth, Boolean drivingConviction, List<String> drivingConvictionCode) {
         this.first = first;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
@@ -50,7 +50,12 @@ public class Customer {
         return drivingConviction;
     }
 
-    public String getDrivingConvictionCode() {
+    public List<String> getDrivingConvictionCode() {
         return drivingConvictionCode;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID:%d FirstName:%s Surname:%s DateOfBirth:%s Conviction:%s", customerID, first, surname, dateOfBirth, drivingConvictionCode);
     }
 }

@@ -6,6 +6,7 @@ import com.uwe.dissertation.ins.policybook.contact.Customer;
 import org.beryx.textio.TextIO;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public class CustomerController {
@@ -25,14 +26,11 @@ public class CustomerController {
         String surname = TextIOUtil.readString("Enter Customer Surname");
         LocalDate dateOfBirth = TextIOUtil.readDate("Enter DOB");
         boolean drivingConviction = TextIOUtil.readBoolean("Have you had any driving convictions?");
-        String drivingConvictionCode = TextIOUtil.readString("Enter driving conviction code");
+        List<String> drivingConvictionCode = null;
+        if (drivingConviction) {
+            drivingConvictionCode = TextIOUtil.readList("Enter driving conviction code");
+        }
 
-//        String first = textIO.newStringInputReader().read("Enter Customer First Name");
-//        String surname = textIO.newStringInputReader().read("Enter Customer  Surname");
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-//        Boolean drivingConviction = Boolean.valueOf(textIO.newStringInputReader().read("Have you had any driving convictions?"));
-//        LocalDate dateOfBirth = LocalDate.parse(textIO.newStringInputReader().read("Enter DOB in the format 'DD/MM/YYYY'"), formatter);
-//        String drivingConvictionCode = textIO.newStringInputReader().read("Enter driving conviction code");
         return new Customer(first, surname, dateOfBirth, drivingConviction, drivingConvictionCode);
     }
 
@@ -46,7 +44,7 @@ public class CustomerController {
         TextIOUtil.println("Customer Lists");
 //        textIO.getTextTerminal().println("Customer Lists");
         for (Customer customer : policyBook.getCustomers()) {
-            TextIOUtil.println("ID:%d FirstName:%s Surname:%s", customer.getCustomerID(), customer.getFirst(), customer.getSurname());
+            TextIOUtil.println(customer.toString());
 //            textIO.getTextTerminal().printf("ID:%d FirstName:%s Surname:%s\n", customer.getCustomerID(), customer.getFirst(), customer.getSurname());
         }
     }
