@@ -24,8 +24,8 @@ public class CustomerController {
         String first = textIO.newStringInputReader().read("Enter Customer First Name");
         String surname = textIO.newStringInputReader().read("Enter Customer  Surname");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        Boolean drivingConviction = Boolean.valueOf(textIO.newStringInputReader().read("Have you had any driving convictions?"));
         LocalDate dateOfBirth = LocalDate.parse(textIO.newStringInputReader().read("Enter DOB in the format 'DD/MM/YYYY'"), formatter);
+        Boolean drivingConviction = Boolean.valueOf(textIO.newStringInputReader().read("Have you had any driving convictions?"));
         String drivingConvictionCode = textIO.newStringInputReader().read("Enter driving conviction code");
         return new Customer(first, surname, dateOfBirth, drivingConviction, drivingConvictionCode);
     }
