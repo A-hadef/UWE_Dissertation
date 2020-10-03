@@ -1,6 +1,7 @@
 package com.uwe.dissertation.ins;
 
 import com.uwe.dissertation.ins.controller.CustomerController;
+import com.uwe.dissertation.ins.controller.PolicyController;
 import com.uwe.dissertation.ins.controller.options.MenuOption;
 import com.uwe.dissertation.ins.io.TextIOUtil;
 import com.uwe.dissertation.ins.policybook.PolicyBook;
@@ -12,11 +13,13 @@ public class InsuranceApp {
     private final TextIO textIO;
     private final CustomerController customerController;
     private final PolicyBook policyBook;
+    private final PolicyController policyController;
 
     public InsuranceApp() {
         textIO = TextIoFactory.getTextIO();
         policyBook = new PolicyBook();
-        customerController = new CustomerController(textIO, policyBook);
+        policyController = new PolicyController(textIO, policyBook);
+        customerController = new CustomerController(textIO, policyBook,policyController);
     }
 
     public static void main(String[] args) {
@@ -32,11 +35,6 @@ public class InsuranceApp {
             TextIOUtil.println("******************************************");
             option = TextIOUtil.readOption(MenuOption.class, "Choose option");
             TextIOUtil.println();
-
-//            textIO.getTextTerminal().println();
-//            textIO.getTextTerminal().println("******************************************");
-//            option = textIO.newEnumInputReader(MenuOption.class).read("Choose option");
-//            textIO.getTextTerminal().println();
             handleOption(option);
         } while (option != MenuOption.EXIT);
 
@@ -57,6 +55,8 @@ public class InsuranceApp {
             case CREATE_NEW_POLICY_FOR_SELECTED_CUSTOMER:
                 customerController.createNewPolicyForSelectedCustomer();
                 break;
+            case DISPLAY_POLICIES:
+                policyController.displayPolicies();
         }
     }
 

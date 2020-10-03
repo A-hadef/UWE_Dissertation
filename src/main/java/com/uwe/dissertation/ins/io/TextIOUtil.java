@@ -1,12 +1,14 @@
 package com.uwe.dissertation.ins.io;
 
 import org.beryx.textio.BooleanInputReader;
+import org.beryx.textio.DoubleInputReader;
 import org.beryx.textio.IntInputReader;
 import org.beryx.textio.StringInputReader;
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -23,6 +25,7 @@ public class TextIOUtil {
     private static final IntInputReader intInputReader;
     private static final BooleanInputReader booleanInputReader;
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DoubleInputReader doubleInputReader;
 
     private TextIOUtil() {
         throw new UnsupportedOperationException("TextIO utility class, do not initialise");
@@ -77,6 +80,7 @@ public class TextIOUtil {
         return booleanInputReader.read(prompt);
     }
 
+
     static {
         textIO = TextIoFactory.getTextIO();
         textTerminal = textIO.getTextTerminal();
@@ -84,9 +88,14 @@ public class TextIOUtil {
         passwordReader = textIO.newStringInputReader().withMinLength(6).withInputMasking(true);
         intInputReader = textIO.newIntInputReader();
         booleanInputReader = textIO.newBooleanInputReader().withDefaultValue(false);
+        doubleInputReader = textIO.newDoubleInputReader();
     }
 
     public static List<String> readList(String prompt) {
         return Arrays.asList(readString(prompt + " separated by commas").split(","));
+    }
+
+    public static BigDecimal readBigDecimal(String prompt) {
+        return BigDecimal.valueOf(doubleInputReader.read(prompt));
     }
 }

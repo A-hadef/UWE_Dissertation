@@ -15,10 +15,10 @@ public class CustomerController {
     private final PolicyController policyController;
     private Customer selectedCustomer;
 
-    public CustomerController(TextIO textIO, PolicyBook policyBook) {
+    public CustomerController(TextIO textIO, PolicyBook policyBook, PolicyController policyController) {
         this.textIO = textIO;
         this.policyBook = policyBook;
-        policyController = new PolicyController(textIO, policyBook);
+        this.policyController = policyController;
     }
 
     private Customer createNewCustomer() {
@@ -42,10 +42,8 @@ public class CustomerController {
 
     public void displayCustomers() {
         TextIOUtil.println("Customer Lists");
-//        textIO.getTextTerminal().println("Customer Lists");
         for (Customer customer : policyBook.getCustomers()) {
             TextIOUtil.println(customer.toString());
-//            textIO.getTextTerminal().printf("ID:%d FirstName:%s Surname:%s\n", customer.getCustomerID(), customer.getFirst(), customer.getSurname());
         }
     }
 
