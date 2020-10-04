@@ -2,6 +2,7 @@ package com.uwe.dissertation.ins.policybook.contact;
 
 import com.uwe.dissertation.ins.policybook.policy.Policy;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,19 @@ public class Customer {
     private final LocalDate dateOfBirth;
     private final Boolean drivingConviction;
     private final List<String> drivingConvictionCode;
+    private Integer numberOfClaims;
+    private LocalDate claimDate;
+    private BigDecimal claimAmount;
 
-    public Customer(String first, String surname, LocalDate dateOfBirth, Boolean drivingConviction, List<String> drivingConvictionCode) {
+    public Customer(String first, String surname, LocalDate dateOfBirth, Boolean drivingConviction, List<String> drivingConvictionCode, Integer numberOfClaims, LocalDate claimDate, BigDecimal claimAmount) {
         this.first = first;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
         this.drivingConviction = drivingConviction;
         this.drivingConvictionCode = drivingConvictionCode;
+        this.numberOfClaims = numberOfClaims;
+        this.claimDate = claimDate;
+        this.claimAmount = claimAmount;
         customerID = CUSTOMER_ID_COUNTER++;
         policies = new ArrayList<>();
     }
@@ -57,5 +64,21 @@ public class Customer {
     @Override
     public String toString() {
         return String.format("ID:%d FirstName:%s Surname:%s DateOfBirth:%s Conviction:%s", customerID, first, surname, dateOfBirth, drivingConvictionCode);
+    }
+
+    public Integer getNumberOfClaims() {
+        return numberOfClaims;
+    }
+
+    public void setNumberOfClaims(Integer numberOfClaims) {
+        this.numberOfClaims = numberOfClaims;
+    }
+
+    public LocalDate getClaimDate() {
+        return claimDate;
+    }
+
+    public BigDecimal getClaimAmount() {
+        return claimAmount;
     }
 }

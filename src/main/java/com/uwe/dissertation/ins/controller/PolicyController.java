@@ -44,7 +44,7 @@ public class PolicyController {
     }
 
     public void displayPolicies() {
-        TextIOUtil.println("Polcies Lists");
+        TextIOUtil.println("Polices Lists");
         for (Policy policy : policyBook.getPolicies()) {
             TextIOUtil.println(policy.toString());
         }
