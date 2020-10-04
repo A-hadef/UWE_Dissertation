@@ -2,10 +2,13 @@ package com.uwe.dissertation.ins.controller;
 
 import com.uwe.dissertation.ins.io.TextIOUtil;
 import com.uwe.dissertation.ins.policybook.PolicyBook;
+import com.uwe.dissertation.ins.policybook.contact.Claim;
 import com.uwe.dissertation.ins.policybook.contact.Customer;
 import org.beryx.textio.TextIO;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +33,17 @@ public class CustomerController {
         if (drivingConviction) {
             drivingConvictionCode = TextIOUtil.readList("Enter driving conviction code");
         }
+        int numberOfClaims = TextIOUtil.readInt("How many claims have you had in the last 5 years regardless of liability");
+        List<Claim> claims = new ArrayList<>();
+        LocalDate claimDate = null;
+        BigDecimal claimAmount = null;
+        if (numberOfClaims) {
+            claimDate = TextIOUtil.readDate("Can you please enter the date of the accident");
+            claimAmount = TextIOUtil.readBigDecimal("Enter Claim Amount");
 
-        return new Customer(first, surname, dateOfBirth, drivingConviction, drivingConvictionCode);
+        }
+
+        return new Customer(first, surname, dateOfBirth, drivingConviction, drivingConvictionCode, numberOfClaims,claimDate,claimAmount);
     }
 
     public void addNewCustomer() {
