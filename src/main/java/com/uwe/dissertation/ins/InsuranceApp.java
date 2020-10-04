@@ -19,7 +19,7 @@ public class InsuranceApp {
         textIO = TextIoFactory.getTextIO();
         policyBook = new PolicyBook();
         policyController = new PolicyController(textIO, policyBook);
-        customerController = new CustomerController(textIO, policyBook,policyController);
+        customerController = new CustomerController(textIO, policyBook, policyController);
     }
 
     public static void main(String[] args) {
@@ -64,13 +64,5 @@ public class InsuranceApp {
     private void typeLogin() {
         TextIOUtil.readString("Username");
         TextIOUtil.readPassword("Password");
-
-//        String user = textIO.newStringInputReader()
-//                .withDefaultValue("admin")
-//                .read("Username");
-//        String password = textIO.newStringInputReader()
-//                .withMinLength(6)
-//                .withInputMasking(true)
-//                .read("Password");
     }
 }
