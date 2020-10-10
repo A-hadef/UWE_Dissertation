@@ -3,7 +3,7 @@ package com.uwe.dissertation.ins.policybook.contact;
 import java.time.LocalDate;
 
 public class Conviction {
-    
+
     private String code;
     private LocalDate date;
 
@@ -22,8 +22,8 @@ public class Conviction {
     public void setCode(String code) {
         this.code = code;
     }
-    
-    public String toString(){
-        return String.format("");
+
+    public String toString() {
+        return String.format("Conviction:[code:%s date:%s", code, date.toString());
     }
 }
