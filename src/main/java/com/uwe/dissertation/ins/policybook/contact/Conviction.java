@@ -24,6 +24,6 @@ public class Conviction {
     }
 
     public String toString() {
-        return String.format("Conviction:[code:%s date:%s", code, date.toString());
+        return String.format("code:%s date:%s", code, date.toString());
     }
 }
