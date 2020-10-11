@@ -36,7 +36,6 @@ public class CustomerController {
 
         Customer customer = new Customer(first, surname, dateOfBirth);
         customer.setDrivingHistory(captureDrivingHistory());
-        customerRepository.save(customer);
         return customer;
     }
 
@@ -75,6 +74,7 @@ public class CustomerController {
     public void addNewCustomer() {
         Customer newCustomer = createNewCustomer();
         policyBook.getCustomers().add(newCustomer);
+        customerRepository.save(newCustomer);
         selectedCustomer = newCustomer;
     }
 
