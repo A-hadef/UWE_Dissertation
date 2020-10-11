@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface CustomerRepository extends MongoRepository<Customer, String> {
 
-    Customer findByFirst(String first);
+    List<Customer> findByFirst(String first);
+
     List<Customer> findBySurname(String surname);
 
 }

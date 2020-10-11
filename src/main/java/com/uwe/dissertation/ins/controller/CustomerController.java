@@ -8,6 +8,7 @@ import com.uwe.dissertation.ins.policybook.contact.DrivingHistory;
 import com.uwe.dissertation.ins.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -76,15 +77,40 @@ public class CustomerController {
         selectedCustomer = newCustomer;
     }
 
-    public void displayCustomers() {
+    public void displayAndSelectCustomer() {
+        selectedCustomer = null;
         TextIOUtil.println("Customer Lists");
 
-        for (Customer customer : customerRepository.findAll()) {
-            TextIOUtil.println(customer.toString());
+        List<Customer> customers = customerRepository.findAll(Sort.by("surname"));
+        for (int i = 0; i < customers.size(); i++) {
+            TextIOUtil.println("index:%d %s", i, customers.get(i).toString());
         }
-//        for (Customer customer : policyBook.getCustomers()) {
-//            TextIOUtil.println(customer.toString());
-//        }
+
+        getCustomerByIndex(customers);
+    }
+
+    private void getCustomerByIndex(List<Customer> customers) {
+        do {
+            int index = TextIOUtil.readInt("Enter the index of the customer to select or -1 to exit this menu");
+            if (index < 0) {
+                break;
+            }
+            if (index > customers.size() - 1) {
+                TextIOUtil.println(String.format("index '%d' is not within the list, try harder", index));
+            } else {
+                selectedCustomer = getCustomerFromDataBase(customers.get(index));
+            }
+        } while (selectedCustomer == null);
+    }
+
+    private Customer getCustomerFromDataBase(Customer customer) {
+        Optional<Customer> customerOptional = customerRepository.findOne(Example.of(customer));
+        if (!customerOptional.isPresent()) {
+            TextIOUtil.println("unable to select customer with index '%d', please try another");
+            return null;
+        } else {
+            return customerOptional.get();
+        }
     }
 
 //    public void selectCustomerByID() {
