@@ -9,16 +9,15 @@ import java.util.List;
 
 public class Customer {
     @Id
-    private final int id;
+    private String id;
     private final String first;
     private final String surname;
-    private static int CUSTOMER_ID_COUNTER = 0;
-    private final List<Policy> policies;
     private final LocalDate dateOfBirth;
     private DrivingHistory drivingHistory;
 
+    private List<Policy> policies;
+
     public Customer(String first, String surname, LocalDate dateOfBirth) {
-        id = CUSTOMER_ID_COUNTER++;
         this.first = first;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
@@ -37,7 +36,7 @@ public class Customer {
         return surname;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -49,9 +48,13 @@ public class Customer {
         return dateOfBirth;
     }
 
+    public void setPolicies(List<Policy> policies) {
+        this.policies = policies;
+    }
+
     @Override
     public String toString() {
-        return String.format("ID:%d FirstName:%s Surname:%s DateOfBirth:%s Driving history:%s", id, first, surname, dateOfBirth, drivingHistory.toString());
+        return String.format("ID:%s FirstName:%s Surname:%s DateOfBirth:%s Driving history:%s", id, first, surname, dateOfBirth, drivingHistory.toString());
     }
 
 }

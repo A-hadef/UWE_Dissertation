@@ -46,7 +46,7 @@ public class UweDissertationApplication implements CommandLineRunner {
 				customerController.displayCustomers();
 				break;
 			case SELECT_CUSTOMER_BY_ID:
-				customerController.selectCustomerByID();
+//				customerController.selectCustomerByID();
 				break;
 			case CREATE_NEW_POLICY_FOR_SELECTED_CUSTOMER:
 				customerController.createNewPolicyForSelectedCustomer();

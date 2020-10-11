@@ -1,13 +1,13 @@
 package com.uwe.dissertation.ins.controller;
 
 import com.uwe.dissertation.ins.io.TextIOUtil;
-import com.uwe.dissertation.ins.policybook.PolicyBook;
 import com.uwe.dissertation.ins.policybook.contact.Claim;
 import com.uwe.dissertation.ins.policybook.contact.Conviction;
 import com.uwe.dissertation.ins.policybook.contact.Customer;
 import com.uwe.dissertation.ins.policybook.contact.DrivingHistory;
 import com.uwe.dissertation.ins.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -17,15 +17,13 @@ import java.util.Optional;
 
 @Component
 public class CustomerController {
-    private final PolicyBook policyBook;
     private final PolicyController policyController;
     private Customer selectedCustomer;
 
     @Autowired
     private CustomerRepository customerRepository;
 
-    public CustomerController(PolicyBook policyBook, PolicyController policyController) {
-        this.policyBook = policyBook;
+    public CustomerController(PolicyController policyController) {
         this.policyController = policyController;
     }
 
@@ -73,32 +71,41 @@ public class CustomerController {
 
     public void addNewCustomer() {
         Customer newCustomer = createNewCustomer();
-        policyBook.getCustomers().add(newCustomer);
+//        policyBook.getCustomers().add(newCustomer);
         customerRepository.save(newCustomer);
         selectedCustomer = newCustomer;
     }
 
     public void displayCustomers() {
         TextIOUtil.println("Customer Lists");
-        for (Customer customer : policyBook.getCustomers()) {
+
+        for (Customer customer : customerRepository.findAll()) {
             TextIOUtil.println(customer.toString());
         }
+//        for (Customer customer : policyBook.getCustomers()) {
+//            TextIOUtil.println(customer.toString());
+//        }
     }
 
-    public void selectCustomerByID() {
-        Integer id = TextIOUtil.readInt("Enter customer id to select");
-        Optional<Customer> customerOptional = policyBook.getCustomers().stream().filter(c -> id.equals(c.getId())).findFirst();
-        if (customerOptional.isPresent()) {
-            selectedCustomer = customerOptional.get();
-            TextIOUtil.println("Selected customer %d %s %s\n", selectedCustomer.getId(), selectedCustomer.getFirst(), selectedCustomer.getSurname());
-        } else {
-            TextIOUtil.println("Customer with ID '%d' not found\n", id);
-        }
-    }
+//    public void selectCustomerByID() {
+//        Integer id = TextIOUtil.readInt("Enter customer id to select");
+////        Optional<Customer> customerOptional = policyBook.getCustomers().stream().filter(c -> id.equals(c.getId())).findFirst();
+//        Optional<Customer> customerOptional = customerRepository.findById(id);
+//        if (customerOptional.isPresent()) {
+//            selectedCustomer = customerOptional.get();
+//            TextIOUtil.println("Selected customer %s %s %s\n", selectedCustomer.getId(), selectedCustomer.getFirst(), selectedCustomer.getSurname());
+//        } else {
+//            TextIOUtil.println("Customer with ID '%d' not found\n", id);
+//        }
+//    }
 
     public void createNewPolicyForSelectedCustomer() {
-        if (selectedCustomer != null) {
-            selectedCustomer.getPolicies().add(policyController.createNewPolicy());
+        Optional<Customer> customerOptional;
+        if (selectedCustomer != null && (customerOptional = customerRepository.findOne(Example.of(selectedCustomer))).isPresent()) {
+            Customer customer = customerOptional.get();
+            customer.getPolicies().add(policyController.createNewPolicy());
+            customerRepository.save(customer);
+//            selectedCustomer.getPolicies().add(policyController.createNewPolicy());
         } else {
             TextIOUtil.println("No customer selected, please create a new customer or select one by id");
         }
