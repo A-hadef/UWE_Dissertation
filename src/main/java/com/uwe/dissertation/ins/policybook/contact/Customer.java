@@ -1,22 +1,24 @@
 package com.uwe.dissertation.ins.policybook.contact;
 
 import com.uwe.dissertation.ins.policybook.policy.Policy;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
+    @Id
+    private final int id;
     private final String first;
     private final String surname;
-    private final int customerID;
     private static int CUSTOMER_ID_COUNTER = 0;
     private final List<Policy> policies;
     private final LocalDate dateOfBirth;
     private DrivingHistory drivingHistory;
 
     public Customer(String first, String surname, LocalDate dateOfBirth) {
-        customerID = CUSTOMER_ID_COUNTER++;
+        id = CUSTOMER_ID_COUNTER++;
         this.first = first;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
@@ -35,8 +37,8 @@ public class Customer {
         return surname;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public int getId() {
+        return id;
     }
 
     public List<Policy> getPolicies() {
@@ -49,7 +51,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return String.format("ID:%d FirstName:%s Surname:%s DateOfBirth:%s Driving history:%s", customerID, first, surname, dateOfBirth, drivingHistory.toString());
+        return String.format("ID:%d FirstName:%s Surname:%s DateOfBirth:%s Driving history:%s", id, first, surname, dateOfBirth, drivingHistory.toString());
     }
 
 }

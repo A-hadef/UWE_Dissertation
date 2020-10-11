@@ -6,6 +6,8 @@ import com.uwe.dissertation.ins.policybook.contact.Claim;
 import com.uwe.dissertation.ins.policybook.contact.Conviction;
 import com.uwe.dissertation.ins.policybook.contact.Customer;
 import com.uwe.dissertation.ins.policybook.contact.DrivingHistory;
+import com.uwe.dissertation.ins.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -19,6 +21,9 @@ public class CustomerController {
     private final PolicyController policyController;
     private Customer selectedCustomer;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     public CustomerController(PolicyBook policyBook, PolicyController policyController) {
         this.policyBook = policyBook;
         this.policyController = policyController;
@@ -31,6 +36,7 @@ public class CustomerController {
 
         Customer customer = new Customer(first, surname, dateOfBirth);
         customer.setDrivingHistory(captureDrivingHistory());
+        customerRepository.save(customer);
         return customer;
     }
 
@@ -81,10 +87,10 @@ public class CustomerController {
 
     public void selectCustomerByID() {
         Integer id = TextIOUtil.readInt("Enter customer id to select");
-        Optional<Customer> customerOptional = policyBook.getCustomers().stream().filter(c -> id.equals(c.getCustomerID())).findFirst();
+        Optional<Customer> customerOptional = policyBook.getCustomers().stream().filter(c -> id.equals(c.getId())).findFirst();
         if (customerOptional.isPresent()) {
             selectedCustomer = customerOptional.get();
-            TextIOUtil.println("Selected customer %d %s %s\n", selectedCustomer.getCustomerID(), selectedCustomer.getFirst(), selectedCustomer.getSurname());
+            TextIOUtil.println("Selected customer %d %s %s\n", selectedCustomer.getId(), selectedCustomer.getFirst(), selectedCustomer.getSurname());
         } else {
             TextIOUtil.println("Customer with ID '%d' not found\n", id);
         }
