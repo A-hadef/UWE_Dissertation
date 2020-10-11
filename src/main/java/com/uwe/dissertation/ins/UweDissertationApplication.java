@@ -35,6 +35,8 @@ public class UweDissertationApplication implements CommandLineRunner {
 			TextIOUtil.println();
 			handleOption(option);
 		} while (option != MenuOption.EXIT);
+
+		TextIOUtil.dispose();
 	}
 
 	private void handleOption(MenuOption option) {

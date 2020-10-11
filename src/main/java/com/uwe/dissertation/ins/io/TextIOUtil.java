@@ -96,4 +96,8 @@ public class TextIOUtil {
     public static BigDecimal readBigDecimal(String prompt) {
         return BigDecimal.valueOf(doubleInputReader.read(prompt));
     }
+
+    public static void dispose() {
+        textIO.dispose();
+    }
 }
