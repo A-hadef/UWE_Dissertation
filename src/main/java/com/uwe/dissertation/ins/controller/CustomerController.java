@@ -6,21 +6,20 @@ import com.uwe.dissertation.ins.policybook.contact.Claim;
 import com.uwe.dissertation.ins.policybook.contact.Conviction;
 import com.uwe.dissertation.ins.policybook.contact.Customer;
 import com.uwe.dissertation.ins.policybook.contact.DrivingHistory;
-import org.beryx.textio.TextIO;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class CustomerController {
-    private final TextIO textIO;
     private final PolicyBook policyBook;
     private final PolicyController policyController;
     private Customer selectedCustomer;
 
-    public CustomerController(TextIO textIO, PolicyBook policyBook, PolicyController policyController) {
-        this.textIO = textIO;
+    public CustomerController(PolicyBook policyBook, PolicyController policyController) {
         this.policyBook = policyBook;
         this.policyController = policyController;
     }
@@ -81,13 +80,13 @@ public class CustomerController {
     }
 
     public void selectCustomerByID() {
-        Integer id = textIO.newIntInputReader().read("Enter customer id to select");
+        Integer id = TextIOUtil.readInt("Enter customer id to select");
         Optional<Customer> customerOptional = policyBook.getCustomers().stream().filter(c -> id.equals(c.getCustomerID())).findFirst();
         if (customerOptional.isPresent()) {
             selectedCustomer = customerOptional.get();
-            textIO.getTextTerminal().printf("Selected customer %d %s %s\n", selectedCustomer.getCustomerID(), selectedCustomer.getFirst(), selectedCustomer.getSurname());
+            TextIOUtil.println("Selected customer %d %s %s\n", selectedCustomer.getCustomerID(), selectedCustomer.getFirst(), selectedCustomer.getSurname());
         } else {
-            textIO.getTextTerminal().printf("Customer with ID '%d' not found\n", id);
+            TextIOUtil.println("Customer with ID '%d' not found\n", id);
         }
     }
 
@@ -95,7 +94,7 @@ public class CustomerController {
         if (selectedCustomer != null) {
             selectedCustomer.getPolicies().add(policyController.createNewPolicy());
         } else {
-            textIO.getTextTerminal().println("No customer selected, please create a new customer or select one by id");
+            TextIOUtil.println("No customer selected, please create a new customer or select one by id");
         }
     }
 }

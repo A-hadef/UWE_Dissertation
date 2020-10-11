@@ -2,19 +2,17 @@ package com.uwe.dissertation.ins.controller;
 
 import com.uwe.dissertation.ins.io.TextIOUtil;
 import com.uwe.dissertation.ins.policybook.PolicyBook;
-import com.uwe.dissertation.ins.policybook.contact.Customer;
 import com.uwe.dissertation.ins.policybook.policy.Policy;
-import org.beryx.textio.TextIO;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Component
 public class PolicyController {
-    private final TextIO textIO;
     private final PolicyBook policyBook;
 
-    public PolicyController(TextIO textIO, PolicyBook policyBook) {
-        this.textIO = textIO;
+    public PolicyController(PolicyBook policyBook) {
         this.policyBook = policyBook;
     }
 
@@ -26,8 +24,8 @@ public class PolicyController {
     }
 
     private void captureRiskData(Policy policy) {
-        String registrationNumber = textIO.newStringInputReader().read("Please Enter your registration number");
-        Integer mileage = textIO.newIntInputReader().read("Please Enter the annual mileage of the vehicle");
+        String registrationNumber = TextIOUtil.readString("Please Enter your registration number");
+        Integer mileage = TextIOUtil.readInt("Please Enter the annual mileage of the vehicle");
         Boolean claimYesNo = TextIOUtil.readBoolean("Have you had any claims in the last 5 years regardless of fault");
 
         if (claimYesNo) {
