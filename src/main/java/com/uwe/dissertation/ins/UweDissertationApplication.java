@@ -2,11 +2,14 @@ package com.uwe.dissertation.ins;
 
 import com.uwe.dissertation.ins.controller.CustomerController;
 import com.uwe.dissertation.ins.controller.PolicyController;
+import com.uwe.dissertation.ins.controller.options.CustomerSearchCriteria;
 import com.uwe.dissertation.ins.controller.options.MenuOption;
 import com.uwe.dissertation.ins.io.TextIOUtil;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import static com.uwe.dissertation.ins.controller.options.MenuOption.FIND_AND_SELECT_CUSTOMER_BY_NAME;
 
 @SpringBootApplication
 public class UweDissertationApplication implements CommandLineRunner {
@@ -45,7 +48,10 @@ public class UweDissertationApplication implements CommandLineRunner {
                 customerController.addNewCustomer();
                 break;
             case DISPLAY_AND_SELECT_CUSTOMER:
-                customerController.displayAndSelectCustomer();
+                customerController.displayAndSelectCustomer(CustomerSearchCriteria.ALL);
+                break;
+            case FIND_AND_SELECT_CUSTOMER_BY_NAME:
+                customerController.displayAndSelectCustomer(CustomerSearchCriteria.BY_NAME);
                 break;
             case CREATE_NEW_POLICY_FOR_SELECTED_CUSTOMER:
                 customerController.createNewPolicyForSelectedCustomer();

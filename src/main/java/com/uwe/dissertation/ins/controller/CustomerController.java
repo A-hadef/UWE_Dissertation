@@ -1,5 +1,6 @@
 package com.uwe.dissertation.ins.controller;
 
+import com.uwe.dissertation.ins.controller.options.CustomerSearchCriteria;
 import com.uwe.dissertation.ins.io.TextIOUtil;
 import com.uwe.dissertation.ins.policybook.contact.Claim;
 import com.uwe.dissertation.ins.policybook.contact.Conviction;
@@ -8,6 +9,7 @@ import com.uwe.dissertation.ins.policybook.contact.DrivingHistory;
 import com.uwe.dissertation.ins.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +33,9 @@ public class CustomerController {
     private Customer createNewCustomer() {
         String first = TextIOUtil.readString("Enter Customer First Name");
         String surname = TextIOUtil.readString("Enter Customer Surname");
+        Customer customer = new Customer(first, surname);
         LocalDate dateOfBirth = TextIOUtil.readDate("Enter DOB");
-
-        Customer customer = new Customer(first, surname, dateOfBirth);
+        customer.setDateOfBirth(dateOfBirth);
         customer.setDrivingHistory(captureDrivingHistory());
         return customer;
     }
@@ -76,16 +78,35 @@ public class CustomerController {
         selectedCustomer = newCustomer;
     }
 
-    public void displayAndSelectCustomer() {
+    public void displayAndSelectCustomer(CustomerSearchCriteria customerSearchCriteria) {
         selectedCustomer = null;
         TextIOUtil.println("Customer Lists");
 
-        List<Customer> customers = customerRepository.findAll(Sort.sort(Customer.class).by(Customer::getSurname).ascending());
+        List<Customer> customers = getCustomersBySearchCriteria(customerSearchCriteria);
         for (int i = 0; i < customers.size(); i++) {
             TextIOUtil.println("index:%d %s", i, customers.get(i).toString());
         }
 
         getCustomerByIndex(customers);
+    }
+
+    private List<Customer> getCustomersBySearchCriteria(CustomerSearchCriteria customerSearchCriteria) {
+        switch (customerSearchCriteria) {
+            case ALL:
+                return customerRepository.findAll(Sort.sort(Customer.class).by(Customer::getSurname).ascending());
+            case BY_NAME:
+                return searchDataBaseByName();
+            default:
+                throw new IllegalStateException("Unexpected value: " + customerSearchCriteria);
+        }
+    }
+
+    private List<Customer> searchDataBaseByName() {
+        String last = TextIOUtil.readString("enter at least one character of the customer's surname");
+        String first = TextIOUtil.readString("enter at least one character of the customer's first name");
+        return customerRepository.findAll(Example.of(new Customer(first, last), ExampleMatcher.matching()
+                .withStringMatcher(ExampleMatcher.StringMatcher.STARTING)
+                .withIgnoreCase()));
     }
 
     private void getCustomerByIndex(List<Customer> customers) {

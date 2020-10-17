@@ -13,15 +13,14 @@ public class Customer {
     private String id;
     private final String first;
     private final String surname;
-    private final LocalDate dateOfBirth;
+    private LocalDate dateOfBirth;
     private DrivingHistory drivingHistory;
     @DBRef
     private List<Policy> policies;
 
-    public Customer(String first, String surname, LocalDate dateOfBirth) {
+    public Customer(String first, String surname) {
         this.first = first;
         this.surname = surname;
-        this.dateOfBirth = dateOfBirth;
         policies = new ArrayList<>();
     }
 
@@ -58,4 +57,7 @@ public class Customer {
         return String.format("ID:%s FirstName:%s Surname:%s DateOfBirth:%s Driving history:%s", id, first, surname, dateOfBirth, drivingHistory.toString());
     }
 
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 }
