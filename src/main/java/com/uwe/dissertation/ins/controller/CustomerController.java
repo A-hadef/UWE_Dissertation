@@ -72,7 +72,6 @@ public class CustomerController {
 
     public void addNewCustomer() {
         Customer newCustomer = createNewCustomer();
-//        policyBook.getCustomers().add(newCustomer);
         customerRepository.save(newCustomer);
         selectedCustomer = newCustomer;
     }
@@ -113,25 +112,12 @@ public class CustomerController {
         }
     }
 
-//    public void selectCustomerByID() {
-//        Integer id = TextIOUtil.readInt("Enter customer id to select");
-////        Optional<Customer> customerOptional = policyBook.getCustomers().stream().filter(c -> id.equals(c.getId())).findFirst();
-//        Optional<Customer> customerOptional = customerRepository.findById(id);
-//        if (customerOptional.isPresent()) {
-//            selectedCustomer = customerOptional.get();
-//            TextIOUtil.println("Selected customer %s %s %s\n", selectedCustomer.getId(), selectedCustomer.getFirst(), selectedCustomer.getSurname());
-//        } else {
-//            TextIOUtil.println("Customer with ID '%d' not found\n", id);
-//        }
-//    }
-
     public void createNewPolicyForSelectedCustomer() {
         Optional<Customer> customerOptional;
         if (selectedCustomer != null && (customerOptional = customerRepository.findOne(Example.of(selectedCustomer))).isPresent()) {
             Customer customer = customerOptional.get();
             customer.getPolicies().add(policyController.createNewPolicy());
             customerRepository.save(customer);
-//            selectedCustomer.getPolicies().add(policyController.createNewPolicy());
         } else {
             TextIOUtil.println("No customer selected, please create a new customer or select one by id");
         }

@@ -47,21 +47,21 @@ public class UweDissertationApplication implements CommandLineRunner {
             case DISPLAY_AND_SELECT_CUSTOMER:
                 customerController.displayAndSelectCustomer();
                 break;
-            case SELECT_CUSTOMER_BY_ID:
-//				customerController.selectCustomerByID();
-                break;
             case CREATE_NEW_POLICY_FOR_SELECTED_CUSTOMER:
                 customerController.createNewPolicyForSelectedCustomer();
                 break;
             case DISPLAY_POLICIES:
                 policyController.displayPolicies();
+                break;
+            case EXIT:
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + option);
         }
     }
-
 
     private void typeLogin() {
         TextIOUtil.readString("Username");
         TextIOUtil.readPassword("Password");
     }
-
 }

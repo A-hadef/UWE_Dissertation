@@ -1,7 +1,6 @@
 package com.uwe.dissertation.ins.controller;
 
 import com.uwe.dissertation.ins.io.TextIOUtil;
-import com.uwe.dissertation.ins.policybook.PolicyBook;
 import com.uwe.dissertation.ins.policybook.policy.Policy;
 import com.uwe.dissertation.ins.repository.PolicyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +12,12 @@ import java.time.LocalDate;
 
 @Component
 public class PolicyController {
-    private final PolicyBook policyBook;
 
     @Autowired
     private PolicyRepository policyRepository;
 
-    public PolicyController(PolicyBook policyBook) {
-        this.policyBook = policyBook;
-    }
-
     public Policy createNewPolicy() {
         Policy policy = new Policy();
-        policyBook.getPolicies().add(policy);
         captureRiskData(policy);
         policyRepository.save(policy);
         return policy;
