@@ -1,20 +1,18 @@
 package com.uwe.dissertation.ins.policybook.policy;
 
+import org.springframework.data.annotation.Id;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Policy {
-    private final int id;
-    private static int POLICY_ID_COUNTER = 0;
+    @Id
+    private String id;
     private String registrationNumber;
     private Integer mileage;
     private Boolean claimYesNo;
     private LocalDate claimDate;
     private BigDecimal claimAmount;
-
-    public Policy() {
-        id = POLICY_ID_COUNTER++;
-    }
 
     public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
@@ -55,8 +53,9 @@ public class Policy {
     public void setClaimAmount(BigDecimal claimAmount) {
         this.claimAmount = claimAmount;
     }
+
     @Override
     public String toString() {
-        return String.format("ID:%d RegistrationNumber:%s Mileage:%s ", id, registrationNumber, mileage);
+        return String.format("ID:%s RegistrationNumber:%s Mileage:%s ", id, registrationNumber, mileage);
     }
 }

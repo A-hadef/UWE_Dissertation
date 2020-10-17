@@ -2,6 +2,7 @@ package com.uwe.dissertation.ins.policybook.contact;
 
 import com.uwe.dissertation.ins.policybook.policy.Policy;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Customer {
     private final String surname;
     private final LocalDate dateOfBirth;
     private DrivingHistory drivingHistory;
-
+    @DBRef
     private List<Policy> policies;
 
     public Customer(String first, String surname, LocalDate dateOfBirth) {

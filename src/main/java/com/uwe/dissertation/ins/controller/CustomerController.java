@@ -81,7 +81,7 @@ public class CustomerController {
         selectedCustomer = null;
         TextIOUtil.println("Customer Lists");
 
-        List<Customer> customers = customerRepository.findAll(Sort.by("surname"));
+        List<Customer> customers = customerRepository.findAll(Sort.sort(Customer.class).by(Customer::getSurname).ascending());
         for (int i = 0; i < customers.size(); i++) {
             TextIOUtil.println("index:%d %s", i, customers.get(i).toString());
         }
